@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Dashboard</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css">
+
+</head>
+
+<body>
+
+<div class="container mt-5">
+
+<h3 class="text-center text-danger mb-4">Admin Dashboard</h3>
+
+<div class="d-flex justify-content-between mb-3">
+
+    <a href="/" class="btn btn-secondary">⬅ Back to Home</a>
+    <a href="/reset" class="btn btn-secondary mb-3">Reset Demo</a>
+    <a href="/logout" class="btn btn-outline-danger">Logout</a>
+
+</div>
+
+<a href="/register" class="btn btn-success mb-3">➕ Add Donor</a>
+
+<!-- DONORS TABLE -->
+<div class="card p-3 mb-4">
+<h5>Donor List</h5>
+
+<table class="table table-bordered text-center">
+<thead class="table-danger">
+<tr>
+<th>ID</th>
+<th>Name</th>
+<th>City</th>
+<th>Phone</th>
+<th>Blood</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody>
+{% for d in donors %}
+<tr>
+<td>{{d.Donor_Id}}</td>
+<td>{{d.Name}}</td>
+<td>{{d.Address}}</td>
+<td>{{d.Phone}}</td>
+<td>{{d.Blood_Group}}</td>
+
+<td>
+<a href="/update/{{d.Donor_Id}}" class="btn btn-warning btn-sm">Edit</a>
+<a href="/delete/{{d.Donor_Id}}" class="btn btn-danger btn-sm"
+   onclick="return confirm('Delete this donor?')">Delete</a>
+</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+
+
+<!-- REQUEST TABLE -->
+<div class="card p-3 mb-4">
+<h5>Blood Requests</h5>
+
+<table class="table table-bordered text-center">
+<thead class="table-warning">
+<tr>
+<th>Name</th>
+<th>Blood</th>
+<th>City</th>
+<th>Units</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody>
+{% for r in requests %}
+<tr>
+<td>{{r.Name}}</td>
+<td>{{r.Blood_Group}}</td>
+<td>{{r.City}}</td>
+<td>{{r.Units_Required}}</td>
+<td>
+{% if r.Status == 'Pending' %}
+<a href="/approve/{{r.Request_ID}}" class="btn btn-success btn-sm">Approve</a>
+{% else %}
+<span class="text-success fw-bold">✔ Completed</span>
+{% endif %}
+</td>
+
+<td>
+{% if r.Status == 'Pending' %}
+<a href="{{ url_for('approve', id=r.Request_ID) }}" 
+   class="btn btn-success btn-sm">Approve</a>
+{% else %}
+✔ Done
+{% endif %}
+</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+
+
+<!-- INVENTORY TABLE -->
+<div class="card p-3 mt-4">
+<h5>Blood Availability</h5>
+
+<table class="table table-bordered text-center">
+<thead class="table-info">
+<tr>
+<th>Blood Group</th>
+<th>Units</th>
+</tr>
+</thead>
+
+{% for i in inventory %}
+<tr>
+<td class="fw-bold text-danger">{{ i.Blood_Group }}</td>
+<td class="fw-bold text-success">{{ i.Units }}</td>
+</tr>
+{% endfor %}
+
+</table>
+
+<h4>City-wise Blood Availability</h4>
+
+<table class="table table-bordered text-center">
+<tr class="table-info">
+<th>City</th>
+<th>Blood Group</th>
+<th>Units</th>
+</tr>
+
+{% for c in city_data %}
+<tr>
+<td>{{ c.City }}</td>
+<td>{{ c.Blood_Group }}</td>
+<td>{{ c.Units }}</td>
+</tr>
+{% endfor %}
+
+</table>
+
+</div>
+</div>
+
+</body>
+</html>

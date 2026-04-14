@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Update Donor</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="container mt-5">
+
+<div class="card p-4 shadow">
+
+<h3 class="text-danger text-center">Update Donor</h3>
+
+<form method="POST">
+
+<input class="form-control mb-2" name="name" value="{{donor.Name}}">
+<input class="form-control mb-2" name="age" value="{{donor.Age}}">
+
+<select class="form-select mb-2" name="gender">
+<option>{{donor.Gender}}</option>
+<option>Male</option>
+<option>Female</option>
+</select>
+
+<input class="form-control mb-2" name="blood_group" value="{{donor.Blood_Group}}">
+<input class="form-control mb-2" name="phone" value="{{donor.Phone}}">
+<input class="form-control mb-2" name="address" value="{{donor.Address}}">
+
+<button class="btn btn-danger w-100">Update</button>
+
+</form>
+
+</div>
+
+</div>
+
+</body>
+</html>
